@@ -15,6 +15,14 @@ from django.http.response import HttpResponse
 from arabicstemmer import ArabicStemmer
 from nltk.tokenize import RegexpTokenizer
 
+# Load pickle data
+data = pickle.load(open("training_data", "rb"))
+words = data['words']
+classes = data['classes']
+
+train_x = data['train_x']
+train_y = data['train_y']
+
 # Initialize and load the model
 net = tflearn.input_data(shape=[None, len(train_x[0])])
 net = tflearn.fully_connected(net, 8)
@@ -27,13 +35,6 @@ model.load('./model.tflearn')
 stemmer = ArabicStemmer()
 tokenizer = RegexpTokenizer(r'\w+')
 
-# Load pickle data
-data = pickle.load(open("training_data", "rb"))
-words = data['words']
-classes = data['classes']
-
-train_x = data['train_x']
-train_y = data['train_y']
 
 print("Processing the Intents.....")
 with open('intents.json') as json_data:
