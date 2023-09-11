@@ -68,7 +68,7 @@ def post_facebook_message(fbid, received_message):
         response = "I didn't understand that."
 
     # Send the response back to Facebook Messenger
-    post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=YOUR_ACCESS_TOKEN'
+    post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=EAALmU52ZBoyQBOyMXPoF0TESpPMW1JgEF1DT2ZCZBc24JhSKnRdaz6jhrIuw9rwtgc6qZCeZAZALFZClgIbamfM2lk5m2tE0VPp2CpkNs3WVMHx6pY3tOLA8LFL7B8RldZCBW7MZAIg8WdDRNBPQgpGXzgUOOWovTrNvy3hobLSO4rZCzZAyJw4celePufZAmP87Ccp2' 
     response_msg = json.dumps(
         {"recipient": {"id": fbid}, "message": {"text": response}})
     requests.post(post_message_url, headers={
