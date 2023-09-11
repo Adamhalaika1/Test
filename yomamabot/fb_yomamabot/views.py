@@ -24,11 +24,35 @@ net = tflearn.regression(net)
 model = tflearn.DNN(net)
 model.load('./model.tflearn')
 
+stemmer = ArabicStemmer()
+tokenizer = RegexpTokenizer(r'\w+')
+
 # Load pickle data
 data = pickle.load(open("training_data", "rb"))
 words = data['words']
 classes = data['classes']
 
+train_x = data['train_x']
+train_y = data['train_y']
+
+print("Processing the Intents.....")
+with open('intents.json') as json_data:
+    intents = json.load(json_data)
+
+arabic_stop_words = set([
+    "أ", "إ", "في", "من", "على", "عن", "مع", "إلى",
+    "هذا", "هذه", "هؤلاء", "ذلك", "ذلكم", "هما",
+    "هم", "هي", "هو", "ليس", "كان", "لم", "لن",
+    "له", "لها", "أن", "عليه", "عليها", "إذا", "عند",
+    "كل", "كما", "كأن", "فقط", "فيه", "قد", "قبل",
+    "مثل", "منذ", "حتى", "حوالي", "عشر", "عدة",
+    "عدد", "كانت", "بين", "بيد", "أيضا", "ضمن",
+    "طالما", "عام", "إلخ", "إلا", "ماذا", "منها",
+    "يوم", "أول", "آخر", "واحد", "فيها", "أنا", "أنت",
+    "نحن", "أنتم", "هم", "هي", "هو", "أنا", "أنت",
+    "نحن", "أنتم", "هم", "هي", "هو"
+    # Add more words as needed
+])
 
 # Helper functions
 def clean_up_sentence(sentence):
